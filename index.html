@@ -8,47 +8,71 @@
 </head>
 <body>
 
-  <header class="app-header">
-    <h1>Portfolio Tracker</h1>
-  </header>
-
   <main class="app-content">
 
     <section id="tab-portfolio" class="tab-content active">
-      <div class="card summary-card">
-        <h3>Total Invested</h3>
-        <p id="total-invested" class="stat-highlight">$0.00</p>
-        <p class="sub-stat">Total Transactions: <span id="total-tx-count">0</span></p>
-      </div>
-
-      <div class="section-title">
-        <h3>Recent Transactions</h3>
-      </div>
-      
-      <div id="transaction-list" class="transaction-list">
+      <div class="card" style="padding: 0;">
+        <div class="table-responsive">
+          <table class="portfolio-table">
+            <thead>
+              <tr>
+                <th>Asset / Sector</th>
+                <th class="text-right">Shares / Avg</th>
+                <th class="text-right">Invested</th>
+              </tr>
+            </thead>
+            <tbody id="portfolio-body">
+              </tbody>
+            <tfoot>
+              <tr>
+                <td colspan="2" class="total-label">Total Invested</td>
+                <td id="portfolio-total" class="text-right total-value">$0.00</td>
+              </tr>
+            </tfoot>
+          </table>
         </div>
+      </div>
     </section>
 
-    <section id="tab-add" class="tab-content">
-      <div class="card">
-        <h3>Add Transaction</h3>
+    <section id="tab-tx" class="tab-content">
+      <div class="action-header">
+        <h3 style="margin: 0;">History</h3>
+        <button id="btn-toggle-form" class="btn btn-primary btn-sm">+ Add</button>
+      </div>
+
+      <div id="form-container" class="card hidden" style="margin-top: 16px;">
+        <h3 style="margin-bottom: 12px; margin-top: 0;">New Transaction</h3>
         <form id="tx-form">
-          <div class="form-group">
-            <label for="tx-type">Type</label>
-            <select id="tx-type" required>
-              <option value="BUY">BUY</option>
-              <option value="SELL">SELL</option>
-            </select>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="tx-type">Type</label>
+              <select id="tx-type" required>
+                <option value="BUY">BUY</option>
+                <option value="SELL">SELL</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="tx-date">Date</label>
+              <input type="date" id="tx-date" required />
+            </div>
           </div>
 
-          <div class="form-group">
-            <label for="tx-ticker">Ticker Symbol</label>
-            <input type="text" id="tx-ticker" placeholder="e.g. AAPL, 0005.HK" style="text-transform:uppercase" required />
-          </div>
-
-          <div class="form-group">
-            <label for="tx-date">Date</label>
-            <input type="date" id="tx-date" required />
+          <div class="form-row">
+            <div class="form-group">
+              <label for="tx-ticker">Ticker</label>
+              <input type="text" id="tx-ticker" placeholder="AAPL, 0005.HK" style="text-transform:uppercase" required />
+            </div>
+            <div class="form-group">
+              <label for="tx-sector">Sector</label>
+              <select id="tx-sector" required>
+                <option value="Technology">Technology</option>
+                <option value="Financials">Financials</option>
+                <option value="Healthcare">Healthcare</option>
+                <option value="Consumer">Consumer</option>
+                <option value="Energy">Energy</option>
+                <option value="Other">Other</option>
+              </select>
+            </div>
           </div>
 
           <div class="form-row">
@@ -56,41 +80,41 @@
               <label for="tx-shares">Shares</label>
               <input type="number" id="tx-shares" step="any" min="0.0001" placeholder="100" required />
             </div>
-
             <div class="form-group">
-              <label for="tx-price">Price / Share ($)</label>
+              <label for="tx-price">Price ($)</label>
               <input type="number" id="tx-price" step="any" min="0" placeholder="150.00" required />
             </div>
           </div>
 
           <div class="form-group">
-            <label for="tx-fee">Transaction Fee ($)</label>
+            <label for="tx-fee">Fee ($)</label>
             <input type="number" id="tx-fee" step="any" min="0" value="0.00" />
           </div>
 
-          <button type="submit" class="btn btn-primary">Save Transaction</button>
+          <div class="form-row" style="margin-top: 8px;">
+            <button type="button" id="btn-cancel-form" class="btn btn-outline" style="margin-right: 8px;">Cancel</button>
+            <button type="submit" class="btn btn-primary">Save</button>
+          </div>
         </form>
       </div>
+
+      <div id="transaction-list" class="transaction-list" style="margin-top: 16px;">
+        </div>
     </section>
 
     <section id="tab-data" class="tab-content">
       <div class="card">
         <h3>Backup & Restore</h3>
         <p class="help-text">Data is stored locally in your browser storage. Export a CSV file regularly for backups.</p>
-
         <div class="action-group">
           <button id="btn-export-csv" class="btn btn-secondary">Export to CSV</button>
         </div>
-
         <hr class="divider" />
-
         <div class="action-group">
           <label for="csv-file-input" class="btn btn-outline">Restore from CSV</label>
           <input type="file" id="csv-file-input" accept=".csv" style="display: none;" />
         </div>
-
         <hr class="divider" />
-
         <div class="action-group">
           <button id="btn-clear-all" class="btn btn-danger">Clear All Data</button>
         </div>
@@ -104,9 +128,9 @@
       <span class="nav-icon">📊</span>
       <span class="nav-label">Portfolio</span>
     </button>
-    <button class="nav-btn" data-tab="tab-add">
-      <span class="nav-icon">➕</span>
-      <span class="nav-label">Add Tx</span>
+    <button class="nav-btn" data-tab="tab-tx">
+      <span class="nav-icon">📋</span>
+      <span class="nav-label">Txn</span>
     </button>
     <button class="nav-btn" data-tab="tab-data">
       <span class="nav-icon">⚙️</span>
