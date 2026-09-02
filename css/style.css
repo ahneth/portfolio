@@ -1,0 +1,206 @@
+:root {
+  --primary-color: #2563eb;
+  --bg-color: #f8fafc;
+  --card-bg: #ffffff;
+  --text-main: #0f172a;
+  --text-muted: #64748b;
+  --border-color: #e2e8f0;
+  --buy-color: #16a34a;
+  --sell-color: #dc2626;
+  --danger-color: #ef4444;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  background-color: var(--bg-color);
+  color: var(--text-main);
+  padding-bottom: 70px; /* Space for fixed bottom navigation */
+}
+
+/* Header */
+.app-header {
+  background-color: var(--card-bg);
+  padding: 16px;
+  text-align: center;
+  border-bottom: 1px solid var(--border-color);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.app-header h1 {
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+
+/* Content Container */
+.app-content {
+  padding: 16px;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* Tab Management */
+.tab-content {
+  display: none;
+}
+
+.tab-content.active {
+  display: block;
+}
+
+/* UI Cards */
+.card {
+  background-color: var(--card-bg);
+  border-radius: 12px;
+  padding: 16px;
+  border: 1px solid var(--border-color);
+  margin-bottom: 16px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+
+.summary-card {
+  text-align: center;
+}
+
+.stat-highlight {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--primary-color);
+  margin: 8px 0;
+}
+
+.sub-stat {
+  font-size: 0.875rem;
+  color: var(--text-muted);
+}
+
+.section-title {
+  margin: 16px 0 8px 0;
+}
+
+/* Forms */
+.form-group {
+  margin-bottom: 14px;
+}
+
+.form-group label {
+  display: block;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  margin-bottom: 6px;
+}
+
+.form-group input,
+.form-group select {
+  width: 100%;
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+  font-size: 1rem;
+  outline: none;
+  background-color: var(--bg-color);
+}
+
+.form-group input:focus,
+.form-group select:focus {
+  border-color: var(--primary-color);
+}
+
+.form-row {
+  display: flex;
+  gap: 12px;
+}
+
+.form-row .form-group {
+  flex: 1;
+}
+
+/* Buttons */
+.btn {
+  width: 100%;
+  padding: 12px;
+  border-radius: 8px;
+  border: none;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  text-align: center;
+  display: inline-block;
+}
+
+.btn-primary { background-color: var(--primary-color); color: #fff; }
+.btn-secondary { background-color: #3b82f6; color: #fff; }
+.btn-outline { background-color: transparent; border: 1px solid var(--primary-color); color: var(--primary-color); }
+.btn-danger { background-color: var(--danger-color); color: #fff; }
+
+/* Transaction List Items */
+.tx-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px;
+  background: var(--card-bg);
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+  margin-bottom: 8px;
+}
+
+.tx-badge {
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 2px 6px;
+  border-radius: 4px;
+  color: #fff;
+  margin-right: 6px;
+}
+
+.tx-badge.BUY { background-color: var(--buy-color); }
+.tx-badge.SELL { background-color: var(--sell-color); }
+
+.tx-details { display: flex; flex-direction: column; }
+.tx-ticker { font-weight: 700; font-size: 1rem; }
+.tx-sub { font-size: 0.75rem; color: var(--text-muted); }
+.tx-amount { text-align: right; font-weight: 600; }
+.tx-delete { background: none; border: none; color: var(--danger-color); margin-left: 10px; font-size: 1.1rem; cursor: pointer; }
+
+.divider { border: 0; height: 1px; background: var(--border-color); margin: 16px 0; }
+.help-text { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 16px; }
+
+/* Bottom Navigation Bar */
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 60px;
+  background-color: var(--card-bg);
+  border-top: 1px solid var(--border-color);
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  z-index: 100;
+}
+
+.nav-btn {
+  background: none;
+  border: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: var(--text-muted);
+  font-size: 0.75rem;
+  cursor: pointer;
+  flex: 1;
+}
+
+.nav-btn.active { color: var(--primary-color); font-weight: 700; }
+.nav-icon { font-size: 1.2rem; margin-bottom: 2px; }
