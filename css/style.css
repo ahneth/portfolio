@@ -1,12 +1,13 @@
 :root {
-  --primary-color: #2563eb;
-  --bg-color: #f8fafc;
-  --card-bg: #ffffff;
-  --text-main: #0f172a;
-  --text-muted: #64748b;
-  --border-color: #e2e8f0;
-  --buy-color: #16a34a;
-  --sell-color: #dc2626;
+  /* Dark mode color palette */
+  --primary-color: #3b82f6; /* Brighter blue for contrast */
+  --bg-color: #0f172a;      /* Dark slate background */
+  --card-bg: #1e293b;       /* Slightly lighter card background */
+  --text-main: #f8fafc;     /* White/light gray text */
+  --text-muted: #94a3b8;    /* Muted gray text */
+  --border-color: #334155;  /* Subtle dark border */
+  --buy-color: #22c55e;     /* Brighter green */
+  --sell-color: #ef4444;    /* Brighter red */
   --danger-color: #ef4444;
 }
 
@@ -63,7 +64,7 @@ body {
   padding: 16px;
   border: 1px solid var(--border-color);
   margin-bottom: 16px;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.5); /* Enhanced shadow for dark mode */
 }
 
 .summary-card {
@@ -108,6 +109,8 @@ body {
   font-size: 1rem;
   outline: none;
   background-color: var(--bg-color);
+  color: var(--text-main); /* Ensure text is visible inside inputs */
+  color-scheme: dark; /* Adapts native elements like date picker to dark mode */
 }
 
 .form-group input:focus,
@@ -137,10 +140,10 @@ body {
   display: inline-block;
 }
 
-.btn-primary { background-color: var(--primary-color); color: #fff; }
-.btn-secondary { background-color: #3b82f6; color: #fff; }
+.btn-primary { background-color: var(--primary-color); color: #ffffff; }
+.btn-secondary { background-color: #2563eb; color: #ffffff; }
 .btn-outline { background-color: transparent; border: 1px solid var(--primary-color); color: var(--primary-color); }
-.btn-danger { background-color: var(--danger-color); color: #fff; }
+.btn-danger { background-color: var(--danger-color); color: #ffffff; }
 
 /* Transaction List Items */
 .tx-item {
@@ -159,7 +162,7 @@ body {
   font-weight: 700;
   padding: 2px 6px;
   border-radius: 4px;
-  color: #fff;
+  color: #ffffff;
   margin-right: 6px;
 }
 
