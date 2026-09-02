@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Stock Portfolio Tracker</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <header class="app-header">
+    <h1>Portfolio Tracker</h1>
+  </header>
+
+  <main class="app-content">
+
+    <section id="tab-portfolio" class="tab-content active">
+      <div class="card summary-card">
+        <h3>Total Invested</h3>
+        <p id="total-invested" class="stat-highlight">$0.00</p>
+        <p class="sub-stat">Total Transactions: <span id="total-tx-count">0</span></p>
+      </div>
+
+      <div class="section-title">
+        <h3>Recent Transactions</h3>
+      </div>
+      
+      <div id="transaction-list" class="transaction-list">
+        </div>
+    </section>
+
+    <section id="tab-add" class="tab-content">
+      <div class="card">
+        <h3>Add Transaction</h3>
+        <form id="tx-form">
+          <div class="form-group">
+            <label for="tx-type">Type</label>
+            <select id="tx-type" required>
+              <option value="BUY">BUY</option>
+              <option value="SELL">SELL</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="tx-ticker">Ticker Symbol</label>
+            <input type="text" id="tx-ticker" placeholder="e.g. AAPL, 0005.HK" style="text-transform:uppercase" required />
+          </div>
+
+          <div class="form-group">
+            <label for="tx-date">Date</label>
+            <input type="date" id="tx-date" required />
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="tx-shares">Shares</label>
+              <input type="number" id="tx-shares" step="any" min="0.0001" placeholder="100" required />
+            </div>
+
+            <div class="form-group">
+              <label for="tx-price">Price / Share ($)</label>
+              <input type="number" id="tx-price" step="any" min="0" placeholder="150.00" required />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="tx-fee">Transaction Fee ($)</label>
+            <input type="number" id="tx-fee" step="any" min="0" value="0.00" />
+          </div>
+
+          <button type="submit" class="btn btn-primary">Save Transaction</button>
+        </form>
+      </div>
+    </section>
+
+    <section id="tab-data" class="tab-content">
+      <div class="card">
+        <h3>Backup & Restore</h3>
+        <p class="help-text">Data is stored locally in your browser storage. Export a CSV file regularly for backups.</p>
+
+        <div class="action-group">
+          <button id="btn-export-csv" class="btn btn-secondary">Export to CSV</button>
+        </div>
+
+        <hr class="divider" />
+
+        <div class="action-group">
+          <label for="csv-file-input" class="btn btn-outline">Restore from CSV</label>
+          <input type="file" id="csv-file-input" accept=".csv" style="display: none;" />
+        </div>
+
+        <hr class="divider" />
+
+        <div class="action-group">
+          <button id="btn-clear-all" class="btn btn-danger">Clear All Data</button>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <nav class="bottom-nav">
+    <button class="nav-btn active" data-tab="tab-portfolio">
+      <span class="nav-icon">📊</span>
+      <span class="nav-label">Portfolio</span>
+    </button>
+    <button class="nav-btn" data-tab="tab-add">
+      <span class="nav-icon">➕</span>
+      <span class="nav-label">Add Tx</span>
+    </button>
+    <button class="nav-btn" data-tab="tab-data">
+      <span class="nav-icon">⚙️</span>
+      <span class="nav-label">Data</span>
+    </button>
+  </nav>
+
+  <script src="js/storage.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
