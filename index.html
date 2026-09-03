@@ -1,144 +1,129 @@
-<!DOCTYPE html> 
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>Stock Portfolio Tracker</title>
-  <link rel="stylesheet" href="css/style.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Portfolio Tracker</title>
+  <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
-  <main class="app-content">
+  <div class="container">
+    <header>
+      <h1>Portfolio Tracker</h1>
+    </header>
 
-    <section id="tab-portfolio" class="tab-content active">
-      <div class="card" style="padding: 0;">
-        <div class="table-responsive">
-          <table class="portfolio-table">
-            <thead>
-              <tr>
-                <th>Asset / Sector</th>
-                <th class="text-right">Shares / Avg</th>
-                <th class="text-right">Invested</th>
-              </tr>
-            </thead>
-            <tbody id="portfolio-body">
-              </tbody>
-            <tfoot>
-              <tr>
-                <td colspan="2" class="total-label">Total Invested</td>
-                <td id="portfolio-total" class="text-right total-value">$0.00</td>
-              </tr>
-            </tfoot>
-          </table>
-        </div>
+    <div id="tab-portfolio" class="tab-content active">
+      <table>
+        <thead>
+          <tr>
+            <th>Asset</th>
+            <th class="text-right">Pos / Avg Cost</th>
+            <th class="text-right">Invested</th>
+          </tr>
+        </thead>
+        <tbody id="portfolio-body">
+          </tbody>
+      </table>
+      
+      <div class="portfolio-footer">
+        <span>Total Portfolio Value</span>
+        <span id="portfolio-total">$0.00</span>
       </div>
-    </section>
+    </div>
 
-    <section id="tab-tx" class="tab-content">
-      <div class="action-header">
-        <h3 style="margin: 0;">History</h3>
-        <button id="btn-toggle-form" class="btn btn-primary btn-sm">+ Add</button>
-      </div>
-
-      <div id="form-container" class="card hidden" style="margin-top: 16px;">
-        <h3 style="margin-bottom: 12px; margin-top: 0;">New Transaction</h3>
+    <div id="tab-history" class="tab-content">
+      <button id="btn-toggle-form" class="btn-primary btn-block" style="margin-bottom: 20px;">+ Add Transaction</button>
+      
+      <div id="form-container" class="form-container hidden">
         <form id="tx-form">
-          <div class="form-row">
-            <div class="form-group">
-              <label for="tx-type">Type</label>
-              <select id="tx-type" required>
-                <option value="BUY">BUY</option>
-                <option value="SELL">SELL</option>
-              </select>
-            </div>
-            <div class="form-group">
-              <label for="tx-date">Date</label>
-              <input type="date" id="tx-date" required />
-            </div>
-          </div>
-
-          <div class="form-row">
-            <div class="form-group">
-              <label for="tx-ticker">Ticker</label>
-              <input type="text" id="tx-ticker" placeholder="AAPL, 0005.HK" style="text-transform:uppercase" required />
-            </div>
-            <div class="form-group">
-              <label for="tx-sector">Sector</label>
-              <select id="tx-sector" required>
-                <option value="Technology">Technology</option>
-                <option value="Financials">Financials</option>
-                <option value="Healthcare">Healthcare</option>
-                <option value="Consumer">Consumer</option>
-                <option value="Energy">Energy</option>
-                <option value="Other">Other</option>
-              </select>
-            </div>
-          </div>
-
-          <div class="form-row">
-            <div class="form-group">
-              <label for="tx-shares">Shares</label>
-              <input type="number" id="tx-shares" step="any" min="0.0001" placeholder="100" required />
-            </div>
-            <div class="form-group">
-              <label for="tx-price">Price ($)</label>
-              <input type="number" id="tx-price" step="any" min="0" placeholder="150.00" required />
-            </div>
-          </div>
-
           <div class="form-group">
-            <label for="tx-fee">Fee ($)</label>
-            <input type="number" id="tx-fee" step="any" min="0" value="0.00" />
+            <label for="tx-type">Type</label>
+            <select id="tx-type" class="form-control" required>
+              <option value="BUY">BUY</option>
+              <option value="SELL">SELL</option>
+            </select>
           </div>
-
-          <div class="form-row" style="margin-top: 8px;">
-            <button type="button" id="btn-cancel-form" class="btn btn-outline" style="margin-right: 8px;">Cancel</button>
-            <button type="submit" class="btn btn-primary">Save</button>
+          
+          <div class="form-group">
+            <label for="tx-ticker">Ticker / Symbol</label>
+            <input type="text" id="tx-ticker" class="form-control" placeholder="e.g. AAPL, BTC" required>
+          </div>
+          
+          <div class="form-group">
+            <label for="tx-sector">Sector</label>
+            <select id="tx-sector" class="form-control" required>
+              <option value="Technology">Technology</option>
+              <option value="Financials">Financials</option>
+              <option value="Healthcare">Healthcare</option>
+              <option value="Consumer">Consumer</option>
+              <option value="Energy">Energy</option>
+              <option value="Crypto">Crypto</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+          
+          <div class="form-group">
+            <label for="tx-date">Date</label>
+            <input type="date" id="tx-date" class="form-control" required>
+          </div>
+          
+          <div style="display: flex; gap: 10px;">
+            <div class="form-group" style="flex: 1;">
+              <label for="tx-shares">Shares</label>
+              <input type="number" id="tx-shares" class="form-control" step="any" min="0" required>
+            </div>
+            
+            <div class="form-group" style="flex: 1;">
+              <label for="tx-price">Price</label>
+              <input type="number" id="tx-price" class="form-control" step="any" min="0" required>
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <label for="tx-fee">Fee</label>
+            <input type="number" id="tx-fee" class="form-control" step="any" min="0" value="0">
+          </div>
+          
+          <div class="form-actions">
+            <button type="submit" class="btn-primary" style="flex: 1;">Save Transaction</button>
+            <button type="button" id="btn-cancel-form" class="btn-secondary" style="flex: 1;">Cancel</button>
           </div>
         </form>
       </div>
 
-      <div id="transaction-list" class="transaction-list" style="margin-top: 16px;">
+      <div id="transaction-list">
         </div>
-    </section>
+    </div>
 
-    <section id="tab-data" class="tab-content">
-      <div class="card">
-        <h3>Backup & Restore</h3>
-        <p class="help-text">Data is stored locally in your browser storage. Export a CSV file regularly for backups.</p>
-        <div class="action-group">
-          <button id="btn-export-csv" class="btn btn-secondary">Export to CSV</button>
-        </div>
-        <hr class="divider" />
-        <div class="action-group">
-          <label for="csv-file-input" class="btn btn-outline">Restore from CSV</label>
-          <input type="file" id="csv-file-input" accept=".csv" style="display: none;" />
-        </div>
-        <hr class="divider" />
-        <div class="action-group">
-          <button id="btn-clear-all" class="btn btn-danger">Clear All Data</button>
-        </div>
+    <div id="tab-data" class="tab-content">
+      <div class="data-section">
+        <h3>Export Data</h3>
+        <p class="help-text">Download all your transactions as a CSV file for backup or spreadsheet analysis.</p>
+        <button id="btn-export-csv" class="btn-primary btn-block">Export to CSV</button>
       </div>
-    </section>
-
-  </main>
-
-  <nav class="bottom-nav">
-    <button class="nav-btn active" data-tab="tab-portfolio">
-      <span class="nav-icon">📊</span>
-      <span class="nav-label">Portfolio</span>
-    </button>
-    <button class="nav-btn" data-tab="tab-tx">
-      <span class="nav-icon">📋</span>
-      <span class="nav-label">Txn</span>
-    </button>
-    <button class="nav-btn" data-tab="tab-data">
-      <span class="nav-icon">⚙️</span>
-      <span class="nav-label">Data</span>
-    </button>
-  </nav>
+      
+      <div class="data-section">
+        <h3>Import Data</h3>
+        <p class="help-text">Upload a previously exported CSV file to restore your transactions.</p>
+        <input type="file" id="csv-file-input" accept=".csv" class="form-control" style="margin-bottom: 10px;">
+      </div>
+      
+      <div class="data-section" style="border-color: var(--danger-color);">
+        <h3 style="color: var(--danger-color);">Danger Zone</h3>
+        <p class="help-text">Wipe all local portfolio data. Make sure you have a backup first.</p>
+        <button id="btn-clear-all" class="btn-danger btn-block">Clear All Data</button>
+      </div>
+    </div>
+  </div> 
+  <div class="nav-tabs">
+    <button class="nav-btn active" data-tab="tab-portfolio">Portfolio</button>
+    <button class="nav-btn" data-tab="tab-history">History</button>
+    <button class="nav-btn" data-tab="tab-data">Data</button>
+  </div>
 
   <script src="js/storage.js"></script>
   <script src="js/app.js"></script>
+
 </body>
 </html>
