@@ -22,38 +22,48 @@ body {
   color: var(--text-main);
   font-size: 0.85rem; 
   line-height: 1.5;
-  padding: 20px;
+  /* Removed global padding and added bottom padding so content clears the fixed bottom nav */
+  padding: 0;
+  padding-bottom: 65px; 
 }
 
 .container {
   max-width: 800px;
   margin: 0 auto;
-  background-color: var(--card-bg);
-  border-radius: 8px;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
-  overflow: hidden;
+  background-color: var(--bg-color); /* Match background for seamless edges */
+  min-height: 100vh;
+  position: relative;
 }
 
 header {
-  padding: 20px;
+  padding: 15px 15px;
   text-align: center;
   border-bottom: 1px solid var(--border-color);
+  background-color: var(--card-bg);
 }
 
 header h1 {
-  font-size: 1.5rem;
+  font-size: 1.25rem;
 }
 
-/* Navigation Tabs */
+/* Fixed Bottom Navigation Tabs */
 .nav-tabs {
   display: flex;
-  border-bottom: 1px solid var(--border-color);
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  max-width: 800px;
+  margin: 0 auto;
   background-color: #111827;
+  border-top: 1px solid var(--border-color); /* Border moved to top */
+  z-index: 1000;
+  padding-bottom: env(safe-area-inset-bottom); /* For iOS rounded screens */
 }
 
 .nav-btn {
   flex: 1;
-  padding: 12px;
+  padding: 15px 10px;
   border: none;
   background: none;
   cursor: pointer;
@@ -70,13 +80,14 @@ header h1 {
 .nav-btn.active {
   color: var(--primary-color);
   background-color: var(--card-bg);
-  border-bottom: 2px solid var(--primary-color);
+  /* Top border active state since it's a bottom nav */
+  border-top: 2px solid var(--primary-color); 
 }
 
-/* Tab Content Areas */
+/* Tab Content Areas - Minimized Margins */
 .tab-content {
   display: none;
-  padding: 20px;
+  padding: 15px; /* Consistent, minimized padding across all pages */
 }
 
 .tab-content.active {
@@ -94,7 +105,7 @@ button {
   background-color: var(--primary-color);
   color: white;
   border: none;
-  padding: 8px 16px;
+  padding: 10px 16px;
   font-weight: 600;
   font-size: 0.85rem;
 }
@@ -107,7 +118,7 @@ button {
   background-color: transparent;
   color: var(--text-muted);
   border: 1px solid var(--border-color);
-  padding: 8px 16px;
+  padding: 10px 16px;
   font-size: 0.85rem;
 }
 
@@ -115,7 +126,7 @@ button {
   background-color: var(--danger-color);
   color: white;
   border: none;
-  padding: 8px 16px;
+  padding: 10px 16px;
   font-size: 0.85rem;
 }
 
@@ -127,7 +138,7 @@ button {
 
 /* Forms */
 .form-container {
-  background-color: #1e293b;
+  background-color: var(--card-bg);
   padding: 15px;
   border-radius: 6px;
   border: 1px solid var(--border-color);
@@ -147,7 +158,7 @@ button {
 
 .form-control {
   width: 100%;
-  padding: 8px;
+  padding: 10px;
   border: 1px solid var(--border-color);
   border-radius: 4px;
   font-family: inherit;
@@ -166,11 +177,11 @@ button {
 table {
   width: 100%;
   border-collapse: collapse;
-  margin-bottom: 20px;
+  margin-bottom: 15px;
 }
 
 th, td {
-  padding: 10px 8px;
+  padding: 12px 4px; /* Tighter left/right, spacious top/bottom */
   border-bottom: 1px solid var(--border-color);
   text-align: left;
 }
@@ -202,10 +213,6 @@ th {
   color: var(--text-muted);
 }
 
-.sector-group-header {
-  background-color: transparent;
-}
-
 .sector-group-header td {
   padding-top: 1.5rem !important;
   padding-bottom: 0.25rem !important;
@@ -217,13 +224,19 @@ th {
   letter-spacing: 0.05em;
 }
 
+/* Highlighted Portfolio Footer Row */
 .portfolio-footer {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding-top: 15px;
+  padding: 16px;
+  margin-top: 20px;
+  background-color: rgba(59, 130, 246, 0.15); /* Distinct primary color tint */
+  border: 1px solid var(--primary-color);     /* Border to make it pop */
+  border-radius: 8px;                         /* Rounded card look */
   font-size: 1.1rem;
   font-weight: bold;
+  color: #ffffff;
 }
 
 /* Transaction History */
@@ -291,9 +304,9 @@ th {
 
 /* Data Management Section */
 .data-section {
-  margin-bottom: 25px;
+  margin-bottom: 20px;
   padding: 15px;
-  background-color: #1e293b;
+  background-color: var(--card-bg);
   border: 1px solid var(--border-color);
   border-radius: 6px;
 }
