@@ -19,10 +19,35 @@
 }
 
 body {
-  background-color: var(--bg-color);
-  color: var(--text-main);
-  padding-bottom: 70px;
+  font-size: 0.85rem; /* Reduces the overall global font size */
 }
+
+/* Adjusting specific sizes to be smaller */
+.ticker-name {
+  font-size: 0.95rem; 
+}
+.val-main {
+  font-size: 0.9rem;
+}
+.val-sub {
+  font-size: 0.75rem;
+}
+
+/* New style for the Sector Group Headers */
+.sector-group-header {
+  background-color: transparent;
+}
+.sector-group-header td {
+  padding-top: 1.5rem !important;
+  padding-bottom: 0.25rem !important;
+  border-bottom: 1px solid var(--border-color);
+  color: var(--primary-color);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+}
+
 
 /* Content Container (Header removed, so added slight top padding) */
 .app-content {
