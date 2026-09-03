@@ -22,17 +22,17 @@ body {
   color: var(--text-main);
   font-size: 0.85rem; 
   line-height: 1.5;
-  /* Removed global padding and added bottom padding so content clears the fixed bottom nav */
   padding: 0;
-  padding-bottom: 65px; 
+  /* Increased bottom padding so the last item in a list is fully visible above the nav bar */
+  padding-bottom: 85px; 
 }
 
 .container {
   max-width: 800px;
   margin: 0 auto;
-  background-color: var(--bg-color); /* Match background for seamless edges */
+  background-color: var(--bg-color);
   min-height: 100vh;
-  position: relative;
+  /* Removed position: relative and overflow: hidden to prevent trapping fixed elements on mobile */
 }
 
 header {
@@ -51,14 +51,14 @@ header h1 {
   display: flex;
   position: fixed;
   bottom: 0;
-  left: 0;
-  right: 0;
+  left: 50%;
+  transform: translateX(-50%); /* Keeps it perfectly centered on wider screens */
+  width: 100%;
   max-width: 800px;
-  margin: 0 auto;
   background-color: #111827;
-  border-top: 1px solid var(--border-color); /* Border moved to top */
-  z-index: 1000;
-  padding-bottom: env(safe-area-inset-bottom); /* For iOS rounded screens */
+  border-top: 1px solid var(--border-color);
+  z-index: 9999; /* Boosted z-index to ensure it stays on top of everything */
+  padding-bottom: env(safe-area-inset-bottom, 0px); /* Respects iOS swipe-up home bar */
 }
 
 .nav-btn {
