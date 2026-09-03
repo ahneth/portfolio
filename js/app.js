@@ -200,22 +200,116 @@ function renderPortfolio(transactions) {
     grandTotal += invested;
 
     const tr = document.createElement('tr');
-    tr.innerHTML = `
-      <td>
-        <span class="ticker-name">${pos.ticker}</span>
-        <span class="sector-name">${pos.sector}</span>
-      </td>
-      <td class="text-right">
-        <span class="val-main">${pos.shares.toFixed(2)}</span>
-        <span class="val-sub">$${pos.avgCost.toFixed(2)} avg</span>
-      </td>
-      <td class="text-right">
-        <span class="val-main">$${invested.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}</span>
-      </td>
-    `;
-    tbody.appendChild(tr);
+function renderPortfolio(transactions) {
+  const tbody = document.getElementById('portfolio-body');
+  const totalEl = document.getElementById('portfolio-total');
+  if (!tbody || !totalEl) return;
+
+  tbody.innerHTML = '';
+
+  if (!transactions || transactions.length === 0) {
+    tbody.innerHTML = '<tr><td colspan="3" style="text-align:center; padding: 20px;">No holdings yet.</td></tr>';
+    totalEl.textContent = '$0.00';
+    return;
+  }
+
+  const holdings = {};
+  transactions.forEach(tx => {
+    const ticker = tx.ticker || 'UNKNOWN';
+    if (!holdings[ticker]) {
+      holdings[ticker] = { ticker: ticker, sector: tx.sector || 'Other', shares: 0, avgCost: 0 };
+    }
+    const h = holdings[ticker];
+
+    if (tx.type === 'BUY') {
+      const shares = tx.shares || 0;
+      const price = tx.price || 0;
+      const fee = tx.fee || 0;
+      
+      const totalCost = (shares * price) + fee;
+      const previousTotalValue = h.shares * h.avgCost;
+      h.shares += shares;
+      
+      if (h.shares > 0) {
+        h.avgCost = (previousTotalValue + totalCost) / h.shares;
+      }
+      h.sector = tx.sector || h.sector;
+    } else if (tx.type === 'SELL') {
+      h.shares -= (tx.shares || 0);
+      if (h.shares <= 0.0001) {
+        h.shares = 0;
+        h.avgCost = 0;
+      }
+    }
   });
 
+  const activePositions = Object.values(holdings).filter(h => h.shares > 0);
+
+  // 1. Calculate grand total first to determine percentages
+  let grandTotal = 0;
+  activePositions.forEach(pos => {
+    grandTotal += (pos.shares * pos.avgCost);
+  });
+
+  // 2. Group active positions by sector
+  const sectors = {};
+  activePositions.forEach(pos => {
+    const sec = pos.sector || 'Other';
+    if (!sectors[sec]) {
+      sectors[sec] = { positions: [], sectorTotal: 0 };
+    }
+    sectors[sec].positions.push(pos);
+    sectors[sec].sectorTotal += (pos.shares * pos.avgCost);
+  });
+
+  // 3. Sort sectors alphabetically
+  const sortedSectorNames = Object.keys(sectors).sort();
+
+  // 4. Render each sector group
+  sortedSectorNames.forEach(secName => {
+    const group = sectors[secName];
+    const sectorPct = grandTotal > 0 ? ((group.sectorTotal / grandTotal) * 100).toFixed(1) : 0;
+
+    // Create the Sector Header Row
+    const headerTr = document.createElement('tr');
+    headerTr.className = 'sector-group-header';
+    headerTr.innerHTML = `
+      <td colspan="2">
+        ${secName}
+      </td>
+      <td class="text-right">
+        $${group.sectorTotal.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})} <span style="opacity: 0.7; font-weight: normal; margin-left: 4px;">(${sectorPct}%)</span>
+      </td>
+    `;
+    tbody.appendChild(headerTr);
+
+    // Sort positions within the sector by invested amount (largest first)
+    group.positions.sort((a, b) => {
+      return (b.shares * b.avgCost) - (a.shares * a.avgCost);
+    });
+
+    // Create rows for the individual tickers
+    group.positions.forEach(pos => {
+      const invested = pos.shares * pos.avgCost;
+
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td>
+          <span class="ticker-name" style="display: block; font-weight: bold;">${pos.ticker}</span>
+        </td>
+        <td class="text-right">
+          <span class="val-main" style="display: block;">${pos.shares.toFixed(2)}</span>
+          <span class="val-sub" style="display: block; color: var(--text-muted);">$${pos.avgCost.toFixed(2)}</span>
+        </td>
+        <td class="text-right">
+          <span class="val-main" style="display: block;">$${invested.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}</span>
+        </td>
+      `;
+      tbody.appendChild(tr);
+    });
+  });
+
+  // Update total portfolio value at the bottom/top
   totalEl.textContent = `$${grandTotal.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
 }
 
